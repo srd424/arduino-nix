@@ -31,12 +31,13 @@ let
     name
     , src
     , fqbn
+    , buildProps ? ""
   }: let
   in pkgs.stdenvNoCC.mkDerivation (finalAttrs: {
     inherit name src;
 
     buildPhase = ''
-      ${arduinoEnv}/bin/arduino-cli compile --log --output-dir=out --fqbn=${fqbn}
+      ${arduinoEnv}/bin/arduino-cli compile ${buildProps} --log --output-dir=out --fqbn=${fqbn}
     '';
 
     installPhase = ''
